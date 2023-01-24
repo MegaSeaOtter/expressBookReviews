@@ -11,4 +11,9 @@ let books = {
       10: {"author": "Samuel Beckett","title": "Molloy, Malone Dies, The Unnamable, the trilogy", "reviews": {} }
 }
 
+router.get("/",(req,res)=>{
+    res.send(JSON.stringify(books,null,4));
+
+});
+
 module.exports=books;
