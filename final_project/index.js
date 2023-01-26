@@ -25,6 +25,16 @@ const authenticatedUser = (username,password)=>{
     return false;
   }
 }
+const booklist = (author,title)=>{
+  let bookreview = books.filter((book)=>{
+    return (books.author === author && books.title === title)
+  });
+  if(validusers.length > 0){
+    return true;
+  } else {
+    return false;
+  }
+}
 
 const app = express();
 
@@ -78,6 +88,19 @@ app.use("/customer", function auth(req,res,next){
      }
    } 
    return res.status(404).json({message: "Unable to register user."});
+ });
+ app.post("/review", (req,res) => {
+   const title = req.body.title;
+   const author = req.body.author;
+   if (title && author) {
+     if (!doesExist(title)) { 
+       books.push({"author":author,"title":title, "review":review});
+       return res.status(200).json({message: "Thank you for your review!"});
+     } else {
+       return res.status(404).json({message: "Title already reviewed by user."});    
+     }
+   } 
+   return res.status(404).json({message: "Title does not exist."});
  });
  
 const PORT =5000;
